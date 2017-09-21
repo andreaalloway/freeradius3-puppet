@@ -1,0 +1,22 @@
+
+client localhost {
+  #  Allowed values are:
+  #	dotted quad (1.2.3.4)
+  #       hostname    (radius.example.com)
+  ipaddr = 127.0.0.1
+
+  secret = <%= $freeradius3::secret %>
+
+  require_message_authenticator = no
+
+  nas_type     = other	# localhost isn't usually a NAS...
+
+}
+
+<% [$freeradius3::accesspoints].flatten.each |$accesspoint| { -%>
+  client <%= $accesspoint::ip %> {
+  ipv4addr = <%= $accesspoint::ip %>
+  secret = <%= $freeradius3::secret %>
+  shortname = <%= $accesspoint::shortname %>
+}
+  <% } -%>
