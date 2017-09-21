@@ -1,8 +1,8 @@
 #!/bin/bash
 
-node_def="/etc/puppetlabs/code/environments/freeradius3-puppet/clients/${1}.yaml"
-default_node="/etc/puppetlabs/code/environments/freeradius3-puppet/clients/default.yaml"
-default_radius="/etc/puppetlabs/code/environments/freeradius3-puppet/clients/default-radius.yaml"
+node_def="/etc/puppetlabs/code/environments/freeradius3/clients/${1}.yaml"
+default_node="/etc/puppetlabs/code/environments/freeradius3/clients/default.yaml"
+default_radius="/etc/puppetlabs/code/environments/freeradius3/clients/default-radius.yaml"
 
 node_name="${1}"
 
