@@ -37,22 +37,20 @@ plain = {
 fcc-mit-ticketflags = true
 
 [realms]
-EDMONTON.NUNA = {
-  kdc = <%= $krb5::nunalocal %>:88
-  admin_server = <%= $krb5::nunalocal %>:749
-  default_domain = EDMONTON.NUNA
+
+  <% [$freeradius3::realms].flatten.each |$realm| { -%>
+<$= $realm::domain %> = {
+  kdc = <%= $realm::domaincontroller %>:88
+  admin_server = <%= $realm::domaincontroller %>:749
+  default_domain = <$= $realm::domain %>
 }
-HRNCONTRACTING.COM = {
-  kdc = <%= $freeradius3::hrnlocal %>:88
-  admin_server = <%= $freeradius3::hrnlocal %>:749
-  default_domain = HRNCONTRACTING.COM
-}
+<% } -%>
 
 [domain_realm]
-  .edmonton.nuna = EDMONTON.NUNA
-edmonton.nuna = EDMONTON.NUNA
-  .hrncontracting.com = HRNCONTRACTING.COM
-hrncontracting.com = HRNCONTRACTING.COM
+  <% [$freeradius3::realms].flatten.each |$realm| { -%>
+  <$= $realm::domainlocal %> = <$= $realm::domain %>
+  <$= $realm::domainlocaldot %> = <$= $realm::domain %>
+  <% } -%>
 
 [kdc]
 profile = /var/kerberos/krb5kdc/kdc.conf
